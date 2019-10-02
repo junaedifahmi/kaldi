@@ -16,14 +16,14 @@ njobs=72
 
 
 # Training models
-./utils/subset_data_dir.sh data/train 1000 data/train.1k || echo "problem with making subset" && exit 1;
+./utils/subset_data_dir.sh data/train 1000 data/train.1k || {echo "problem with making subset" && exit 1;}
 ./steps/train_mono.sh --nj $njobs --cmd "$train_cmd" data/train.1k data/lang exp/mono/model || \
-	echo "problem with training" && exit 1;
+	{echo "problem with training" && exit 1};
 
 # Decoding models, this mean making graph and testing the model we have made with process before
 ## Making model
 ./utils/mkgraph.sh data/lang_test exp/mono/model exp/mono/graph || echo "problem with making graph" && exit 1;
-
+	
 ## Decode and testing the model, 
 ./steps/decode.sh --config conf/decode.config --nj $njobs --cmd "$decode_cmd" \
 	exp/mono/graph data/test exp/mono/decode
