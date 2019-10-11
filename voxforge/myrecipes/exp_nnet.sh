@@ -5,7 +5,7 @@ source ./path.sh || exit 10;
 
 dir_exp=./exp/nnet
 dir_gmm=./exp/gmm
-dir_fmllr=./exp/fmmlr_ali_gmm
+dir_fmllr=./exp/gmm/fmllr
 awct=0.1
 
 
