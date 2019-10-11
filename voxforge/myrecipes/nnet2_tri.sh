@@ -5,35 +5,33 @@
 . ./path.sh || exit 1;
 . ./cmd.sh || exit 1;
 
-num_threads=10
-num_hidden_layer=2
-num_layer_dim=50
-num_epoch=10
-iter_per_epoch=2
-init_lr=0.02
-fin_lr=0.004
-min_batch=20
+dir_base=./exp/nnet2
+dir_sat=./exp/sat
+
+if [ ! -d ${dir_sat} ]; then
+	echo "belum training sat";
+	exit 90;
+fi
 
 
-exp_dir=exp/nnet/tri
+
 # Training Model
+dir_exp=${dir_base}/pnorm
 
-./steps/nnet2/train_pnorm_simple.sh --config ./conf/nnet.config \
-	data/train \
-	data/lang \
-	exp/tri/lda_mltt \
-	${exp_dir}
+./steps/nnet2/train_pnorm_fast.sh --cmd "$gpu_cmd" \
+	data/train data/lang ${dir_sat} \
+	${dir_exp}/model
+
+./steps/mkgraph.sh data/lang ${dir_exp}/model ${dir_exp}/graph
 
 # Decode
-./steps/nnet2/decode.sh --config ./conf/nnet_decode.config \
-	exp/tri/lda_mltt/graph \
+./steps/nnet2/decode.sh --cmd "$decode_cmd" \
+	${dir_exp}/graph
 	data/test \
-	${exp_dir}/decode
+	${dir_exp}/model/decode
 
 # Get best WER
 for x in ${exp_dir}/decode*; do
 	[ -d $x ] && grep WER $x/wer_* | \
-		utils/best_wer.sh > nnet2_simple_wer.txt;
+		utils/best_wer.sh > ${exp_dir}/best_wer.txt;
 done
-
-echo "Done"

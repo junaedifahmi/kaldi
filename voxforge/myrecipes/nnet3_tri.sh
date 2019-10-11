@@ -6,17 +6,13 @@
 
 dir_base=/exp/tri/sat
 
-dir_train=./data/train
-dir_lang=./data/lang
 dir_test=./data/test
 
 dir_exp=./exp/nnet3/tri
 
-
-#Training model
-./steps/nnet3/train_tdnn.sh --config ./conf/nnet3.cfg \
-	$dir_train $dir_lang $dir_base/align \
-	$dir_exp/model
+./steps/nnet3/chain/train.py \
+	--cmd "$gpu_cmd" \
+	--feat
 
 #Decode
 ./steps/nnet3/decode.sh --config ./conf/nnet3.decode \
