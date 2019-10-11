@@ -12,7 +12,7 @@ dir_ali=./exp/delta
 gauss=10000
 leaves=15000
 
-if [ -d $dir_ali/align ]; then
+if [ ! -d $dir_ali/align ]; then
 	./steps/align_si.sh --nj $njobs --cmd "$train_cmd" \
 		data/train data/lang $dir_ali/model $dir_ali/align;
 fi

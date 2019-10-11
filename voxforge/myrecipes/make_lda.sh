@@ -8,7 +8,7 @@ source ./utils/parse_options.sh || exit 3;
 dir_exp="./exp/lda"
 dir_ali="./exp/delta/align"
 
-if [ -d ${dir_ali} ]; then
+if [ ! -d ${dir_ali} ]; then
 	echo "Belum buat align for delta";
 	exit 4;
 fi

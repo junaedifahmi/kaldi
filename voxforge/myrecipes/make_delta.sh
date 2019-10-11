@@ -12,7 +12,7 @@ dir_mono_ali=./exp/mono/align
 gauss=5000
 leaves=10000
 
-if [ -d $dir_mono_ali ]; then
+if [ ! -d $dir_mono_ali ]; then
 	./steps/align_si.sh --nj $njobs --cmd "$train_cmd" \
 		data/train data/lang exp/mono/model $dir_mono_ali;
 fi
