@@ -11,7 +11,7 @@ dir_ali="./exp/ddelta"
 gauss=12000
 leaves=15000
 
-if [ ! -d ${dir_ali} ]; then
+if [ ! -d ${dir_ali}/align ]; then
 	echo "Belum buat align for delta";
 	./steps/align_si.sh --nj $njobs --cmd "$train_cmd" \
 		data/train data/lang $dir_ali/model $dir_ali/align; 
