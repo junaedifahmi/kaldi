@@ -55,15 +55,10 @@ for iter in {1..4}; do
 		$gmm/model/decode 
 
 
-
-
-
-
-
-
-
-
-
+for x in $gmm/*/decode*; do
+	[ -d $x ] && grep WER $x/*wer_* | \
+		./utils/best_wer.sh > $gmm/best_wer.txt;
+done
 
 
 

@@ -31,7 +31,7 @@ echo "Align SI"
 	$dir_model/align $dir_model/denlats \
 	$dir_model/mmi${boost};
 
-./steps/decode.sj --config conf/decode.config --iter 4 nj $njobs --cmd "$decode_cmd" \
+./steps/decode.sh --config conf/decode.config --iter 4 nj $njobs --cmd "$decode_cmd" \
 	$dir_model/graph data/test $dir_model/mmi${boost}
 
 

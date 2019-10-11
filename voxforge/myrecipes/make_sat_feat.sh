@@ -8,7 +8,7 @@ source parse_options.sh || exit 3;
 dir_model="./exp/sat"
 boost=0.05
 
-echo "Align SI"
+echo "Align fMLL"
 
 # ./steps/align_si.sh --nj $njobs --cmd "$train_cmd" --use-graphs true \
 # 	data/train data/lang $dir_model/model $dir_model/align;
@@ -20,7 +20,6 @@ echo "Align SI"
 ./steps/make_denlats.sh --nj $njobs --cmd "$train_cmd" \
 	--transform-dir ${dir_model}/fmllr
 	data/train data/lang $dir_model/model $dir_model/denlats;
-
 
 # Get mmi features
 ./steps/train_mmi.sh data/train data/lang \

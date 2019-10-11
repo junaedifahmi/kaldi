@@ -55,5 +55,8 @@ for iter in {3..8}; do
 		data/test $dubm/fmmi_d/decode${iter};
 done
 
-
+for x in $dubm/*/decode*; do
+	[ -d $x ] && grep WER $x/*wer_* | \
+		./utils/best_wer.sh > $dubm/best_wer.txt;
+done
 

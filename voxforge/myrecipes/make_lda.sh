@@ -6,17 +6,17 @@ source ./path.sh || exit 2;
 source ./utils/parse_options.sh || exit 3;
 
 dir_exp="./exp/lda"
-dir_ali="./exp/delta/align"
+dir_ali="./exp/ddelta"
+
+gauss=12000
+leaves=15000
 
 if [ ! -d ${dir_ali} ]; then
 	echo "Belum buat align for delta";
+	./steps/align_si.sh --nj $njobs --cmd "$train_cmd" \
+		data/train data/lang $dir_ali/model $dir_ali/align; 
 	exit 4;
 fi
-
-
-gauss=2000
-leaves=11000
-
 
 ./steps/train_lda_mllt.sh --cmd "$train_cmd" \
 	$gauss $leaves \
@@ -29,7 +29,7 @@ leaves=11000
 ./steps/decode.sh --config conf/decode.config --nj $njobs --cmd "$decode_cmd" \
 	$dir_exp/graph data/test $dir_exp/model/decode
 
-./steps/scoring_kaldi.sh data/test $dir_exp/graph $dir_exp/model/decode
+./steps/score_kaldi.sh data/test $dir_exp/graph $dir_exp/model/decode
 
 for x in $dir_exp/*/decode*; do
 	[ -d $x ] && grep WER $x/*wer_* | \
