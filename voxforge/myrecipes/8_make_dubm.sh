@@ -46,7 +46,7 @@ done
 ./steps/train_mmi_fmmi_indirect.sh --learning-rate 0.002 \
 	--schedule "fmmi fmmi fmmi fmmi mmi mmi mmi mmi" \
 	--boost 0.1 --cmd "$train_cmd" data/train data/lang \
-	$sat/fmllr $dubm $sat/denlats \
+	$sat/fmllr $dubm/model $sat/denlats \
 	$dubm/fmmi_d;
 
 for iter in {3..8}; do 

@@ -24,7 +24,8 @@ gauss=500
 
 ./steps/nnet/ivector/extract_ivectors.sh \
 	--cmd "$train_cmd" --nj $njobs \
-	data/train data/lang ${dir_exp}/extractor \
+	data/train data/lang \
+	exp/lda/model/decode ${dir_exp}/extractor \
 	${dir_exp}/feats;
 
 

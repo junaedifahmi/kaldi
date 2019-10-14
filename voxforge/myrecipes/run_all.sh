@@ -5,66 +5,60 @@ source ./path.sh || exit 3;
 source parse_options.sh || exit 3;
 
 if [ ! -d ./exp/mono ]; then
-	./myrecipes/make_mono.sh;
+	./myrecipes/1_make_mono.sh;
 fi
 
 if [ ! -d ./exp/delta ]; then
-	./myrecipes/make_delta.sh;
+	./myrecipes/2_make_delta.sh;
 fi
 
 
 if [ ! -d ./exp/ddelta ]; then
-	./myrecipes/make_ddelta.sh;
+	./myrecipes/3_make_ddelta.sh;
 fi
 
 
 if [ ! -d ./exp/lda ]; then
-	./myrecipes/make_lda.sh;
-	./myrecipes/make_lda_feats.sh;
+	./myrecipes/4_make_lda.sh;
+	./myrecipes/5_make_lda_feats.sh;
 fi
 
 
 if [ ! -d ./exp/sat ]; then
-	./myrecipes/make_sat.sh;
-	./myrecipes/make_sat_feats.sh;
+	./myrecipes/6_make_sat.sh;
+	./myrecipes/7_make_sat_feats.sh;
 fi
 
 if [ ! -d ./exp/dubm ]; then
-	./myrecipes/make_dubm.sh;
+	./myrecipes/8_make_dubm.sh;
 fi
 
 if [ ! -d ./exp/ubm ]; then
-	./myrecipes/make_ubm.sh;
+	./myrecipes/9_make_ubm.sh;
 fi
 
 if [ ! -d ./exp/gmm ]; then
-	./myrecipes/make_gmm.sh;
+	./myrecipes/10_make_gmm.sh;
 fi
 
 if [ ! -d ./exp/nnet ]; then
-	./myrecipes/make_nnet.sh;
+	./myrecipes/11_make_nnet.sh;
 fi
 
 if [ ! -d ./exp/nnet2 ]; then
-	./myrecipes/make_nnet2.sh;
+	./myrecipes/12_make_nnet2.sh;
+fi
+
+if [ ! -d ./exp/ivector ]; then
+    ./myrecipes/13_make_ivector.sh;
 fi
 
 if [ ! -d ./exp/nnet3 ]; then
-	./myrecipes/make_nnet3.sh;
+	./myrecipes/14_make_nnet3.sh;
 fi
 
 if [ ! -d ./exp/chain ]; then
-	./myrecipes/make_chain.sh;
+	./myrecipes/15_make_chain.sh;
 fi
-
-
-
-
-
-
-
-
-
-
 
 
