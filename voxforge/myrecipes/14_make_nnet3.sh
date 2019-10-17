@@ -11,7 +11,7 @@ gmm=./exp/gmm
 
 if [ ! -d $ivector ]; then
 	echo " Belum bikin iVector, bentar aku bikinin";
-	./myrecipes/make_ivector.sh || exit 4;
+	./myrecipes/13_make_ivector.sh || exit 4;
 fi
 
 

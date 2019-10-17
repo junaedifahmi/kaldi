@@ -16,17 +16,17 @@ if [ ! -d $dir_ali/align ]; then
 		data/train data/lang $dir_ali/model $dir_ali/align;
 fi
 
-./steps/train_deltas.sh --cmd "$train_cmd" \
+time ( ./steps/train_deltas.sh --cmd "$train_cmd" \
 	$gauss $leaves \
 	data/train data/lang \
-	$dir_ali/align $dir_exp/model;
+	$dir_ali/align $dir_exp/model; ) 2> $dir_exp/train.time
 
 echo "Bikin graph nya"
 
 ./utils/mkgraph.sh data/lang_test $dir_exp/model $dir_exp/graph;
 
-./steps/decode.sh --config conf/decode.config --nj $njobs --cmd "$decode_cmd" \
-	$dir_exp/graph data/test $dir_exp/model/decode
+time ( ./steps/decode.sh --config conf/decode.config --nj $njobs --cmd "$decode_cmd" \
+	$dir_exp/graph data/test $dir_exp/model/decode ) 2> $dir_exp/decode.time
 
 ./steps/score_kaldi.sh data/test $dir_exp/graph $dir_exp/model/decode
 

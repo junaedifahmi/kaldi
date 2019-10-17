@@ -61,4 +61,8 @@ if [ ! -d ./exp/chain ]; then
 	./myrecipes/15_make_chain.sh;
 fi
 
+for x in exp/*/best_wer.txt ; do
+    cat $x >> best_wer_all.txt;
+done
+
 

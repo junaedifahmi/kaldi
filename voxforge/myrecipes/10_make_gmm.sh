@@ -19,15 +19,15 @@ gauss=8000
 substates=19000
 
 
-./steps/train_sgmm2.sh --cmd "$train_cmd" $gauss $substates \
+time ( ./steps/train_sgmm2.sh --cmd "$train_cmd" $gauss $substates \
 	data/train data/lang $sat/fmllr $ubm \
-	$gmm/model;
+	$gmm/model; ) 2> train.time
 
 ./utils/mkgraph.sh data/lang_test $gmm/model $gmm/graph;
 
-./steps/decode_sgmm2.sh --config conf/decode.config --nj $njobs --cmd "$decode_cmd" \
+time ( ./steps/decode_sgmm2.sh --config conf/decode.config --nj $njobs --cmd "$decode_cmd" \
 	--transform-dir $sat/model/decode \
-	$gmm/graph data/test $gmm/model/decode;
+	$gmm/graph data/test $gmm/model/decode; ) 2> decode.time
 
 ./steps/align_sgmm2.sh --nj $njobs --cmd "$train_cmd" --transform-dir $sat/fmllr \
 	--use-graphs true \
@@ -56,7 +56,7 @@ for iter in {1..4}; do
 
 
 for x in $gmm/*/decode*; do
-	[ -d $x ] && grep WER $x/*wer_* | \
+	[ -d $x ] && grep WER $x/wer_* | \
 		./utils/best_wer.sh > $gmm/best_wer.txt;
 done
 

@@ -17,9 +17,9 @@ fi
 
 echo "Training data dulu"
 
-./steps/train_mono.sh --nj $njobs --cmd "$train_cmd" \
+time ( ./steps/train_mono.sh --nj $njobs --cmd "$train_cmd" \
 	$dir_subset data/lang \
-	$dir_exp/model
+	$dir_exp/model ) 2> $dir_exp/training.time
 
 echo "Bikin graphnya"
 
@@ -27,8 +27,8 @@ echo "Bikin graphnya"
 
 echo "Decode model pake data test"
 
-./steps/decode.sh --config conf/decode.config --nj $njobs --cmd "$train_cmd" \
-	${dir_exp}/graph data/test ${dir_exp}/model/decode
+time ( ./steps/decode.sh --config conf/decode.config --nj $njobs --cmd "$train_cmd" \
+	${dir_exp}/graph data/test ${dir_exp}/model/decode ) 2> $dir_exp/decode.time
 
 for x in ${dir_exp}/*/decode*; do
 	[ -d $x ] && \
