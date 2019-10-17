@@ -31,6 +31,6 @@ echo "Bikin graph nya"
 ./steps/score_kaldi.sh data/test $dir_exp/graph $dir_exp/model/decode
 
 for x in $dir_exp/*/decode*; do
-	[ -d $x ] && grep WER $x/*wer_* | \
+	[ -d $x ] && grep WER $x/wer_* | \
 		./utils/best_wer.sh > $dir_exp/best_wer.txt;
 done

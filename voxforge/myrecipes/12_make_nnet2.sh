@@ -13,10 +13,11 @@ if [ ! -d $sat ]; then
 fi
 
 ./steps/nnet2/train_pnorm_fast.sh --cmd "$gpu_cmd" \
+    --num-epochs 2 \
 	data/train data/lang $sat \
 	$nnet2/model
 
-./utils/mkgraph.sh data/lang $nnet2/model $nnet2/graph 
+./utils/mkgraph.sh data/lang_test $nnet2/model $nnet2/graph 
 
 ./steps/nnet2/decode.sh --cmd "$decode_cmd" \
 	$nnet2/graph \

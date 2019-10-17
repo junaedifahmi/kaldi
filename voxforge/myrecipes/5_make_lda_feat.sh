@@ -8,8 +8,6 @@ source parse_options.sh || exit 3;
 dir_model="./exp/lda"
 boost=0.05
 
-echo "Align SI"
-
 ./steps/align_si.sh --nj $njobs --cmd "$train_cmd" --use-graphs true \
 	data/train data/lang $dir_model/model $dir_model/align;
 

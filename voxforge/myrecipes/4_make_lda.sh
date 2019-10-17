@@ -21,7 +21,7 @@ fi
 ./steps/train_lda_mllt.sh --cmd "$train_cmd" \
 	$gauss $leaves \
 	data/train data/lang \
-	$dir_ali \
+	$dir_ali/align \
 	$dir_exp/model;
 
 ./utils/mkgraph.sh data/lang_test $dir_exp/model $dir_exp/graph;

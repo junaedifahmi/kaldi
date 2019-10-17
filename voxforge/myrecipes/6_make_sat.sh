@@ -17,10 +17,10 @@ if [ ! -d $dir_ali ]; then
 		data/train data/lang ./exp/lda/model ${dir_ali}
 fi
 
-./steps/train_sat.sh --cmd "$train_cmd" \
-	$leaves $gauss \
-	data/train data/lang ${dir_ali} \
-	${dir_exp}/model
+./steps/train_sat.sh --cmd "$train_cmd" \  #config
+	$leaves $gauss \                       #hiperparam
+	data/train data/lang ${dir_ali} \      #input
+	${dir_exp}/model                       #output
 
 ./utils/mkgraph.sh data/lang_test ${dir_exp}/model ${dir_exp}/graph
 
@@ -28,6 +28,6 @@ fi
 	${dir_exp}/graph data/test ${dir_exp}/model/decode
 
 for x in $dir_exp/*/decode*; do
-	[ -d $x ] && grep WER $x/*wer_* | \
+	[ -d $x ] && grep WER $x/wer_* | \
 		./utils/best_wer.sh > $dir_exp/best_wer.txt;
 done

@@ -12,14 +12,18 @@ echo "Align fMLL"
 
 # ./steps/align_si.sh --nj $njobs --cmd "$train_cmd" --use-graphs true \
 # 	data/train data/lang $dir_model/model $dir_model/align;
-
-./steps/align_fmllr.sh --nj $njobs --cmd "$train_cmd" --use-graphs true \
-	data/train data/lang $dir_model/model $dir_model/fmllr
+if [ ! -f $dir_model/fmllr/final.alimdl ]; then
+    ./steps/align_fmllr.sh --nj $njobs --cmd "$train_cmd" --use-graphs true \
+        data/train data/lang $dir_model/model $dir_model/fmllr
+fi
 
 # Align Denlats with fMllr
+if [ ! -d $dir_model/denlats ]; then
 ./steps/make_denlats.sh --nj $njobs --cmd "$train_cmd" \
-	--transform-dir ${dir_model}/fmllr
-	data/train data/lang $dir_model/model $dir_model/denlats;
+	--transform-dir ${dir_model}/fmllr \
+	data/train data/lang $dir_model/model \
+	$dir_model/denlats;
+fi
 
 # Get mmi features
 ./steps/train_mmi.sh data/train data/lang \

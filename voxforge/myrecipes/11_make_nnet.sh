@@ -20,7 +20,7 @@ done
 
 # Split dataset
 
-./utils/subset_data_dir_tr_cv.sh $nnet/data/train $nnet/feats/tr90 $nnet/feats/cv10 ;
+./utils/subset_data_dir_tr_cv.sh $nnet/data/train $nnet/data/tr90 $nnet/data/cv10 ;
 
 dbn=$nnet/dbn
 ./steps/nnet/pretrain_dbn.sh --rbm-iter 3 $nnet/data/train $dbn;

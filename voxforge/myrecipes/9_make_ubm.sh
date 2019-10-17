@@ -5,7 +5,7 @@ source ./path.sh || exit 2;
 source parse_options.sh || exit 3;
 
 sw=0.5
-gauss=400
+gauss=1500
 sat=./exp/sat
 ubm=./exp/ubm
 

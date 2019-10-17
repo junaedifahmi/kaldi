@@ -6,7 +6,7 @@ source ./path.sh || exit 2;
 source parse_options.sh || exit 3;
 
 chain=./exp/chain
-ivector=./exp/ivector
+ivector=./exp/ivector/feats
 
 xent_regularize=0.1
 
@@ -30,7 +30,7 @@ ali=./exp/gmm/align
 
 # Create Config Files
 
-num_target=$(tree-info $chain/tree | grep num-pdfs|awk '{print $2}' )
+num_target=$(tree-info $chain/tree/tree | grep num-pdfs|awk '{print $2}' )
 lr_factor=$(echo "print (0.5/$xent_regularize)" | python )
 affine_opts="l2-regularize=0.01 dropout-proportion=0.0 dropout-per-dim=true dropout-per-dim-continuous=true"
 tdnnf_opts="l2-regularize=0.01 droupout-proportion=0.0 droupout-proportion=0.0 bypass-scale=0.66"
@@ -71,7 +71,7 @@ echo "input dim=100 name=ivector
 
 ./steps/nnet3/xconfig_to_configs.py --xconfig-file $chain/configs/network.xconfig --config-dir $chain/configs
 
-./steps/chain/make_den_lats.sh
+./steps/chain/make_weighted_den_fst.sh exp/sat/align $chain/model
 # Training
 ./steps/nnet3/chain/train.py \
 	--cmd "$train_cmd" \
@@ -90,11 +90,11 @@ echo "input dim=100 name=ivector
 	--dir $chain/model
 
 # Make graph
-./utils/mkgraph.sh --self-loop-scale 1.0 data/lang $chain/model $chain/graph
+./utils/mkgraph.sh --self-loop-scale 1.0 data/lang_test $chain/model $chain/graph
 
 # Decode
 
-./steps/nnet3/deocode.sj --acwt 1.0 --post-decode-acwt 10.0 \
+./steps/nnet3/deocode.sh --acwt 1.0 --post-decode-acwt 10.0 \
 	--nj $njobs --cmd "$decode_cmd" \
 	--online-ivector-dir $ivector \
 	$chain/graph data/test $chain/model/decode
