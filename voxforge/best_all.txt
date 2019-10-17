@@ -1,0 +1,8 @@
+%WER 25.57 [ 9238 / 36129, 1206 ins, 1139 del, 6893 sub ] ./exp/ddelta/model/decode/wer_16
+%WER 25.83 [ 9332 / 36129, 1284 ins, 1096 del, 6952 sub ] ./exp/delta/model/decode/wer_14
+%WER 19.54 [ 7061 / 36129, 1106 ins, 663 del, 5292 sub ] ./exp/dubm/fmmi_d/decode8/wer_14
+%WER 18.14 [ 6552 / 36129, 1381 ins, 516 del, 4655 sub ] ./exp/gmm/model/decode/wer_11
+%WER 25.20 [ 9103 / 36129, 1397 ins, 1051 del, 6655 sub ] ./exp/lda/model/decode/wer_17_0.0
+%WER 46.50 [ 16800 / 36129, 1127 ins, 3423 del, 12250 sub ] ./exp/mono/model/decode/wer_10
+%WER 19.70 [ 7116 / 36129, 899 ins, 995 del, 5222 sub ] exp/nnet2/model/decode/wer_13_1.0
+%WER 26.03 [ 9404 / 36129, 1678 ins, 924 del, 6802 sub ] ./exp/sat/model/decode.si/wer_17

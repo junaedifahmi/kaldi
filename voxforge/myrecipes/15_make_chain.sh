@@ -71,7 +71,7 @@ echo "input dim=100 name=ivector
 
 ./steps/nnet3/xconfig_to_configs.py --xconfig-file $chain/configs/network.xconfig --config-dir $chain/configs
 
-
+./steps/chain/make_den_lats.sh
 # Training
 ./steps/nnet3/chain/train.py \
 	--cmd "$train_cmd" \

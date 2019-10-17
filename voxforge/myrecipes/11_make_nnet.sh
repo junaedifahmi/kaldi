@@ -5,21 +5,25 @@ source ./path.sh || exit 10;
 
 nnet=./exp/nnet
 gmm=./exp/gmm
+sat=./exp/sat
+
 
 acwt=0.001
 
 for x in train test; do
-    ./steps/nnet/make_fmllr_feats.sh --nj $njobs --cmd "$train_cmd" \
-        --transform-dir $gmm/model/decode \
-        $gmm/align data/$x $gmm/model $nnet/log $nnet/feats/$x;
+    if [ ! -d $nnet/feats/$x ]; then
+    	./steps/nnet/make_fmllr_feats.sh --nj $njobs --cmd "$train_cmd" \
+        	--transform-dir $sat/model/decode \
+        	$nnet/data/$x data/$x $gmm/model $nnet/log $nnet/feats/$x;
+    fi
 done
 
 # Split dataset
 
-./utils/subset_dir_tr_cv.sh $nnet/feats/train $nnet/feats/tr90 $nnet/feats/cv10 ;
+./utils/subset_data_dir_tr_cv.sh $nnet/data/train $nnet/feats/tr90 $nnet/feats/cv10 ;
 
 dbn=$nnet/dbn
-./steps/nnet/pretrain_dbn.sh --rbm-iter 3 $nnet/feats/train $dbn;
+./steps/nnet/pretrain_dbn.sh --rbm-iter 3 $nnet/data/train $dbn;
 
 (tail --pid=$$ -F $nnet/log/train.log 2>/dev/null)&
 $gpu_cmd $nnet/log/train.log \
