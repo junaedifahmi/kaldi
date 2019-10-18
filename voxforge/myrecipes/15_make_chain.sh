@@ -41,7 +41,7 @@ output_opts="l2-regularize=0.002"
 mkdir -p $chain/configs
 
 echo "input dim=100 name=ivector
-  input dim=40 name=input
+  input dim=13 name=input
 
   delta-layer name=delta
   no-op-component name=input2 input=Append(delta, Scale(1.0, ReplaceIndex(ivector, t, 0)))
@@ -71,7 +71,24 @@ echo "input dim=100 name=ivector
 
 ./steps/nnet3/xconfig_to_configs.py --xconfig-file $chain/configs/network.xconfig --config-dir $chain/configs
 
+
+dir_lat=exp/sat/lat
+
+if [ ! -d $dir_lat ]; then
+	./steps/align_fmllr_lat.sh --cmd "$train_cmd" --nj $njobs data/train data/lang exp/sat $dir_lat;
+fi
+
 ./steps/chain/make_weighted_den_fst.sh exp/sat/align $chain/model
+
+
+$common_egs_dir=./exp/chain/egs
+
+if [ ! -d $common_egs_dir ]; then
+	./steps/chain/get_egs.sh --online-ivectoer-dir $ivector --left-context 1 --right-context 8 data/train $chain/model ./exp/sta/lta $common_egs_dir;
+fi
+
+
+
 # Training
 ./steps/nnet3/chain/train.py \
 	--cmd "$train_cmd" \
@@ -84,9 +101,10 @@ echo "input dim=100 name=ivector
 	--chain.lm-opts="--num-extra-lm-states=2000" \
 	--trainer.dropout-schedule $dropout_schedule \
 	--trainer.add-option="--optimization.memory-compression-level=2" \
+	--egs-dir $common_egs_dir \
 	--feat-dir data/train \
 	--tree-dir $chain/tree \
-	--lat-dir \
+	--lat-dir $dir_lat \
 	--dir $chain/model
 
 # Make graph

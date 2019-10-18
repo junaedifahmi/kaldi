@@ -3,7 +3,7 @@
 # This code is used to prepare data from making lang data until mfcc
 
 . ./path.sh || exit 1;
-. ./cmd || exit 1;
+. ./cmd.sh || exit 1;
 
 dialects="British"
 
@@ -28,7 +28,7 @@ local/voxforge_data_prep.sh --nspk_test ${nspk_test} ${selected} || exit 1;
 
 local/voxforge_prepare_lm.sh --order ${lm_order} || exit 1;
 
-lcoal/voxforge_prepare_dict.sh || exit 1;
+local/voxforge_prepare_dict.sh || exit 1;
 
 utils/prepare_lang.sh --position-dependent-phones $pos_dep_phones \
 	data/local/dict '!SIL' data/local/lang data/lang || exit 1
